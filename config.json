@@ -1,0 +1,7 @@
+{
+  "region": "eu-west-1",
+  "providers": {
+    "stripe": { "api_key": "sk_live_4Gd8Tn2KxQ71pZa", "mode": "test" },
+    "mail": { "api_token": "mt_Zx81Qp0Lm4Ta", "from": "noreply@example.com" }
+  }
+}
