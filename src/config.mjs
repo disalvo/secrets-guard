@@ -18,6 +18,12 @@ export function isSecretName(name) {
   return SECRET_NAME.test(name);
 }
 
+export function maskSecret(value) {
+  const text = String(value);
+  if (text.length < 8) return '****';
+  return `****${text.slice(-4)}`;
+}
+
 export function loadConfig(envPath = '.env', configPath = 'config.json') {
   return {
     env: parseEnv(readFileSync(envPath, 'utf8')),
@@ -36,6 +42,8 @@ export function flatten(cfg) {
   return rows;
 }
 
-export function dumpConfig(cfg) {
-  return flatten(cfg).map(([name, value]) => `${name}=${value}`).join('\n');
+export function dumpConfig(cfg, { redact = false } = {}) {
+  return flatten(cfg)
+    .map(([name, value]) => `${name}=${redact && isSecretName(name) ? maskSecret(value) : value}`)
+    .join('\n');
 }

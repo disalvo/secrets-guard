@@ -6,6 +6,7 @@ release. It merges the process environment (`.env`) with the provider block in
 
 ```
 node src/cli.mjs dump          # print every key and value
+node src/cli.mjs dump --redact # print every key, masking secret values
 node src/cli.mjs get <key>     # print one value (dotted path for providers)
 ```
 
