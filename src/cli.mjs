@@ -4,7 +4,7 @@ const [, , cmd, ...args] = process.argv;
 const cfg = loadConfig();
 
 if (cmd === 'dump') {
-  console.log(dumpConfig(cfg));
+  console.log(dumpConfig(cfg, { redact: args.includes('--redact') }));
 } else if (cmd === 'get') {
   const key = args[0];
   const rows = new Map(Object.entries(cfg.env));
