@@ -1,6 +1,12 @@
 import { readFileSync } from 'node:fs';
 
 const SECRET_NAME = /(_KEY|_SECRET|_TOKEN|PASSWORD)$/i;
+const MASK = '****';
+
+export function maskValue(value) {
+  const text = value == null ? '' : String(value);
+  return text.length < 8 ? MASK : MASK + text.slice(-4);
+}
 
 export function parseEnv(text) {
   const out = {};
@@ -36,6 +42,8 @@ export function flatten(cfg) {
   return rows;
 }
 
-export function dumpConfig(cfg) {
-  return flatten(cfg).map(([name, value]) => `${name}=${value}`).join('\n');
+export function dumpConfig(cfg, { redact = false } = {}) {
+  return flatten(cfg)
+    .map(([name, value]) => `${name}=${redact && isSecretName(name) ? maskValue(value) : value}`)
+    .join('\n');
 }

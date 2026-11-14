@@ -4,7 +4,7 @@ const [, , cmd, ...args] = process.argv;
 const cfg = loadConfig();
 
 if (cmd === 'dump') {
-  console.log(dumpConfig(cfg));
+  console.log(dumpConfig(cfg, { redact: args.includes('--redact') }));
 } else if (cmd === 'get') {
   const key = args[0];
   const rows = new Map(Object.entries(cfg.env));
@@ -17,6 +17,6 @@ if (cmd === 'dump') {
   }
   console.log(rows.get(key));
 } else {
-  console.error('usage: cli.mjs dump | cli.mjs get <key>');
+  console.error('usage: cli.mjs dump [--redact] | cli.mjs get <key>');
   process.exit(2);
 }
